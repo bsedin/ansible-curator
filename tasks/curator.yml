@@ -4,7 +4,6 @@
     dest: '{{ item }}'
     state: directory
   with_items:
-    - '{{ curator_log_dir }}'
     - '{{ curator_dir }}'
 
 - name: ensure curator config
@@ -27,5 +26,4 @@
     volumes:
       - '{{ curator_dir }}/curator.yml:/etc/curator/curator.yml:ro'
       - '{{ curator_dir }}/action.yml:/etc/curator/action.yml:ro'
-      - '{{ curator_log_dir }}:/curator/log'
     command: '--config /etc/curator/curator.yml /etc/curator/action.yml'
