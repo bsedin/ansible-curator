@@ -1,0 +1,7 @@
+---
+curator_dir: /opt/docker/services/curator
+curator_log_dir: /var/log/curator
+curator_image: bobrik/curator
+curator_container_name: curator
+curator_elasticsearch_hosts: []
+curator_links: []

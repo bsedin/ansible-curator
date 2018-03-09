@@ -1,0 +1,31 @@
+---
+- name: ensure curator dirs
+  file:
+    dest: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ curator_log_dir }}'
+    - '{{ curator_dir }}'
+
+- name: ensure curator config
+  template:
+    src: '{{ item }}.yml.j2'
+    dest: '{{ curator_dir }}/{{ item }}.yml'
+  with_items:
+    - curator
+    - action
+
+- name: run curator container
+  docker_container:
+    state: started
+    restart: yes
+    recreate: yes
+    name: '{{ curator_container_name }}'
+    image: '{{ curator_image }}'
+    restart_policy: always
+    links: '{{ curator_links }}'
+    volumes:
+      - '{{ curator_dir }}/curator.yml:/etc/curator/curator.yml:ro'
+      - '{{ curator_dir }}/action.yml:/etc/curator/action.yml:ro'
+      - '{{ curator_log_dir }}:/curator/log'
+    command: '--config /etc/curator/curator.yml /etc/curator/action.yml'
