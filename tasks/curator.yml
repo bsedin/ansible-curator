@@ -23,6 +23,7 @@
     image: '{{ curator_image }}'
     restart_policy: always
     links: '{{ curator_links }}'
+    networks: '{{ curator_networks }}'
     volumes:
       - '{{ curator_dir }}/curator.yml:/etc/curator/curator.yml:ro'
       - '{{ curator_dir }}/action.yml:/etc/curator/action.yml:ro'
