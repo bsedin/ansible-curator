@@ -21,10 +21,17 @@
     recreate: yes
     name: '{{ curator_container_name }}'
     image: '{{ curator_image }}'
-    restart_policy: always
+    restart_policy: 'no'
     links: '{{ curator_links }}'
     networks: '{{ curator_networks }}'
     volumes:
       - '{{ curator_dir }}/curator.yml:/etc/curator/curator.yml:ro'
       - '{{ curator_dir }}/action.yml:/etc/curator/action.yml:ro'
     command: '--config /etc/curator/curator.yml /etc/curator/action.yml'
+
+- name: add curator job to crontab
+  cron:
+    name: execute curator
+    minute: '0'
+    hour: '*'
+    job: docker start curator
