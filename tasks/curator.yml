@@ -22,6 +22,7 @@
     name: '{{ curator_container_name }}'
     image: '{{ curator_image }}'
     restart_policy: 'no'
+    pull: true
     links: '{{ curator_links }}'
     networks: '{{ curator_networks }}'
     volumes:
